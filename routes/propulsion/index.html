@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html ng-app="mdx" ng-controller="MainController">
+  <head>
+    <meta charset="UTF-8">
+   
+    <title>Ground Station</title>
+    <link rel="stylesheet" href=".././css/normalize.css">
+    <link rel="stylesheet" type="text/css" href=".././css/loading.css">
+    <script src=".././js/modernizr-2.6.2.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link  href=".././css/prism.css" rel="stylesheet" type="text/css" />
+    <link  href=".././css/style.css" rel="stylesheet" type="text/css" />
+    <link  href=".././css/gaugetoolkit.css" rel="stylesheet" type="text/css" />
+    <link  href=".././css/gaugetoolkit.css" rel="stylesheet" type="text/css" />
+  
+    <link rel="stylesheet" type="text/css" href=".././css/font-awesome.min.css">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.3.1.min.js" integrity="sha256-F+wfFu+siTub2Ju6XxPLHgv5OL3Jzs5srj7Xfxj6b9c=" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABz5AGVYM0nQs4bguxbgOjtT2c5dePhM8" ></script>
+
+    <style>
+        html, body {
+          height: 100%;
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          background-color:#343a40;
+          overflow: hidden;
+    position:fixed;
+        }
+  
+      #jumbo{
+        float: right;
+        width:48%;
+        background-color:black;
+        height:100%;
+      
+      }
+     
+        .g1 {
+         
+       padding-left: 2%;
+        }
+        .g2{
+          padding-left: 2%;
+          padding-bottom: 5%;
+        }
+     .gg{
+       padding-left: 2%;
+       padding-right: 2%;
+     }
+     #ss{
+       margin-top: -2%;
+       margin-left: 8%;
+     }
+     #nbar{
+     
+     }
+      </style>
+       <nav id="nbar"   class="navbar fixed-top navbar-expand-sm bg-dark">
+
+          <!-- Links -->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/dash"><b>Flight Navigation</b> <img src="./icons/fg.png"  width="23" height="23"></a>      
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="/propulsion"><b>Propulsion System</b> <img src="./icons/prop2.png"  width="25" height="25"></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dash"><b>Mechanics</b> <img src="./icons/mech.png"  width="23" height="23"></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dash"><b>Configuration</b> <img src="./icons/conf.png"  width="23" height="23"></a>
+            </li>
+           
+            <li class="nav-item">
+              <a class="nav-link" href="/planner"><b>Planner </b><img src="./icons/planner.png"  width="23" height="23"></a>
+            </li>
+    <li class="nav-item">
+      <a class="nav-link" href=""><b>(Datalink)=</b></a>
+    </li> 
+            <li  id="linksel" class="nav-item">
+              <div class="form-group">
+                <select ng-change="linkchange(datalink)" ng-disabled="linkdn" ng-model="datalink" class="form-control" id="sel1">
+                  <option>Gateway</option>
+                  <option>Serial</option>
+                </select>
+              </div>
+            </li>
+            &nbsp;
+            <li ng-show="slisten" class="nav-item">
+                <a class="nav-link" href=""><b>(Speed)=</b></a>
+              </li> 
+            <li  id="linksel2" ng-show="slisten"  class="nav-item">
+              <div class="form-group">
+                <select  ng-model="dataport"   ng-disabled="linkdn" class="form-control"  id="sel2">
+                  <option >9600</option>
+                  <option>19200</option>
+                  <option>38400</option>
+                  <option>57600</option>
+                  <option>115200</option>
+                  <option>230400</option>
+                  <option>250000</option>
+                </select>
+              </div>
+            </li>
+            &nbsp;
+            <li style="float: right" class="nav-item">
+            <input class="form-control" ng-disabled="linkdn" id="linkpath" placeholder="Enter url or serial port" ng-model="linkpath">
+            </li>
+          <li class="nav-item">&nbsp;<button ng-disabled="conStatus" class="{{btnC}}" ng-click="connect(linkpath,datalink)"><b>{{btnStatus}}</b></button></li>
+          </ul>
+         
+        </nav>
+  </head>
+  <body class="demo" >
+    <div id="loader-wrapper">
+			<div id="loader"></div>
+
+			<div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+
+    </div>
+   
+        <div id="jumbo" class="jumbotron">
+            <div id="jum" class="container">
+              <h1  ><b style=" margin-left:15% ;color: chocolate">Propulsion Controls</b></h1> 
+            <br>
+             
+              <input type="text" value="75" class="dial">
+
+<div class="table-responsive">
+    <h2>Basic Table</h2>
+    <p>The .table class adds basic styling (light padding and horizontal dividers) to a table:</p>            
+    <table class="table table-borderless">
+      <thead>
+        <tr>
+          <th>Firstname</th>
+          <th>Lastname</th>
+         
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John</td>
+          <td><h2><b style="color:rgba(0, 128, 0, 0.92)">Doe</b></h2></td>
+       
+        </tr>
+        <tr>
+       <td>    <input type="text" value="75" class="dial"></td>
+       <td>    <input type="text" value="75" class="dial"></td>
+         
+        </tr>
+        <tr>
+          <td>July</td>
+          <td>Dooley</td>
+        
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  
+
+            </div>
+          </div>
+      
+<span>
+  <div class="pdash">
+    <div style="width: 52% ;height: 40%; background-color: rgb(2, 2, 2)" class="jumbotron">
+        <table id="ss"  class="table table-borderless">
+           
+            <tbody>
+              <tr>
+                <td><b style="color:grey">Engine 1 (%)</b></td>
+                <td><b style="color:grey">Engine 2 (%)</b></td>
+                <td><b style="color:grey">ESC Status</b></td>
+                
+              </tr>
+              <tr>
+                <td><h2><b style="color:rgba(0, 128, 0, 0.92)">{{engine1}}</b></h2></td>
+                <td><h2><b style="color:rgba(128, 0, 128, 0.92)">{{engine2}}</b></h2></td>
+                <td><h2><b style="color:rgba(255, 255, 0, 0.6)">{{estat}}</b></h2></td>
+              </tr>
+              <tr>
+                  <td><b style="color:grey">ESC 1 (raw)</b></td>
+                  <td><b style="color:grey">ESC 2 (raw)</b></td>
+                  <td><b style="color:grey">ESC 1 Temp(°c)</b></td>
+              </tr>
+            </tr>
+            <tr>
+                <td><h2><b style="color:rgba(0, 128, 0, 0.92)">{{esc1}}</b></h2></td>
+                <td><h2><b style="color:rgba(128, 0, 128, 0.92)">{{esc2}}</b></h2></td>
+                <td><h2><b style="color:rgba(255, 255, 0, 0.6)">{{esc1temp}}</b></h2></td>
+            </tr>
+
+            <tr>
+              <td><b style="color:grey">ESC 1 (raw)</b></td>
+              <td><b style="color:grey">ESC 2 (raw)</b></td>
+              <td><b style="color:grey">ESC 1 Temp(°c)</b></td>
+          </tr>
+        </tr>
+        <tr>
+            <td><h2><b style="color:rgba(0, 128, 0, 0.92)">{{esc1}}</b></h2></td>
+            <td><h2><b style="color:rgba(128, 0, 128, 0.92)">{{esc2}}</b></h2></td>
+            <td><h2><b style="color:rgba(255, 255, 0, 0.6)">{{esc1temp}}</b></h2></td>
+        </tr>
+            <tr>
+                <td><b style="color:grey">Env Temp(°c)</b></td>
+                <td><b style="color:grey">Battery Temp(°c)</b></td>
+                <td><b style="color:grey">ESC 2 Temp(°c)</b></td>
+            </tr>
+            <tr>
+                <td><h2><b style="color:rgba(0, 128, 0, 0.92)">{{envtemp}}</b></h2></td>
+                <td><h2><b style="color:rgba(128, 0, 128, 0.92)">{{battemp}}</b></h2></td>
+                <td><h2><b style="color:rgba(255, 255, 0, 0.6)">{{esc2temp}}</b></h2></td>
+              </tr>
+            
+            </tbody>
+          </table>
+     
+<div class="g1" >
+    <span class="gg" id="thrust1"></span>
+  <span class="gg"id="esc1"></span>
+  <span class="gg" id="battery"></span>
+  
+  </div>
+  
+  <div class="g2">
+     
+  <span class="gg" id="thrust2"></span>
+  <span class="gg" id="esc2"></span>
+  <span class="gg" id ="current"></span>
+  
+  </div>
+      </div>
+     
+      </span>
+    
+       
+
+</div>
+
+  </body>
+  <script src=".././js/loading.js"></script>
+  <script src=".././js/knob.js"></script>
+  <script src=".././js/jquery.gaugetoolkit.js"></script>
+  <script src=".././js/prism.js"></script>
+  <script src=".././js/angular.min.js">  </script>
+
+<script src="./propulsion.js">  </script>
+</html>

@@ -1,0 +1,34 @@
+{
+  "name": "rc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "re": "electron-rebuild",
+    "rebuild": "electron-rebuild -f -w serialport"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@serialport/parser-readline": "^2.0.2",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "electron": "^5.0.0",
+    "electron-log": "^3.0.5",
+    "electron-reload": "^1.4.0",
+    "express": "^4.16.4",
+    "parse-json": "^4.0.0",
+    "random-item": "^3.0.0",
+    "randomstring": "^1.1.5",
+    "restler": "^3.4.0",
+    "serialport": "^7.1.5",
+    "serve-static": "^1.14.0",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^1.8.4"
+  }
+}
