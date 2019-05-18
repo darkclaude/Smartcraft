@@ -333,7 +333,7 @@ ipcMain.on('getmissionState', (event, args) => {
 
 setInterval(function(){
  // log.info("HELLO")
- rest.get("https://USER:PASS@opensky-network.org/api/states/all?lamin=22.3752&lomin=51.6174&lamax=26.4949&lomax=56.6161").on('complete', function (result) {
+ rest.get("https://opensky-network.org/api/states/all?lamin=22.3752&lomin=51.6174&lamax=26.4949&lomax=56.6161").on('complete', function (result) {
  if (result instanceof Error) {
     //console.log('Error:', result.message);
     this.retry(5000); // try again after 5 sec
