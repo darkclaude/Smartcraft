@@ -147,7 +147,7 @@ else{
       });
 }
 
-  
+var connectState = ipcRenderer.sendSync('new_connection', 'new');
 //console.log(heading);
  setInterval(function(){
   
@@ -422,15 +422,15 @@ $scope.btnC= "btn btn-danger";
  for(var keys in data){
      keyc=keyc+1;
  }
- console.log(data.pitch)
+ //console.log(data.pitch)
  if(keyc==29){
 
  }
  else{
- console.log(data)
+ //console.log(data)
  } 
 }catch(error){
-
+  console.log(error);
    }
 //console.log(data.heading)
 if(data.heading<96 || data.heading>96){
@@ -478,9 +478,8 @@ for(m of missions){
  // m.setMap(null);
 }
 var missionAr = JSON.parse(data.mission);
-for(var b=0; b<missionAr.length; b++){
-mission.push(JSON.parse(missionAr[b]));
-}
+console.log(missionAr);
+mission = missionAr;
 var waypoint = {};
 var pathP =[] ;
 for(var m of mission){
@@ -531,7 +530,7 @@ plane.setIcon(planeSymbol);
 
 $scope.distwp =   mapObj.getDistance({lat:plane.getPosition().lat(),lng: plane.getPosition().lng()},{lat: 25.038015, lng: 55.117550}).toFixed(1)
 }catch(error){
-  console.log(data);
+ // console.log(data);
   console.log(error);
  
 }     

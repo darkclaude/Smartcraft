@@ -190,8 +190,8 @@ $scope.btnC= "btn btn-danger";
         thrust2.setValue(data.engine2)/10;
         esc1.setValue(data.esc1);
         esc2.setValue(data.esc2);
-        battery.setValue(data.battery);
-        current.setValue(parseInt(data.battery)/5.2);
+        battery.setValue(data.battery_volts);
+        current.setValue(parseInt(data.battery_amps)/5.2);
     
         $scope.engine1 = data.engine1;
         $scope.engine2 = data.engine2;

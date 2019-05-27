@@ -95,6 +95,7 @@ ipcMain.on('httpget', (event, args) => {
 
 
 
+
 ipcMain.on('connect', (event, args) => {
   socargs = args;
   socket = io('http://' + args);
@@ -103,6 +104,7 @@ ipcMain.on('connect', (event, args) => {
   socket.on('connect', function () {
     win.webContents.send('connected', 'Gateway Connected');
     gloargs = 'GATEWAY';
+    socket.emit('new_connection',"");
     console.log('in')
   });
 
@@ -129,19 +131,51 @@ ipcMain.on('connect', (event, args) => {
     // var payload = {};
     var utime = new Date() - upt;
     var timenn = new Date(utime).getMilliseconds();
-    console.log("Average Update:  " + timenn);
+   // console.log("Average Update:  " + timenn);
     upt = new Date();
-
+   try{
     payload = JSON.parse(data);
 
     var payloadJson = JSON.stringify(payload);
     //console.log(payloadJson);
-    win.webContents.send('data', payloadJson);
+    if(payload.type=="telemetry"){
+      win.webContents.send('data',data);
+      if(data.toString().indexOf("KEEP") >=0){
+      }
+    else{
+      missionCache= line.toString();
+    }
+      }
+    
+    else if(payload.type=="commandresponse"){
+      win.webContents.send('commandresponse',data);
+      
+      console.log(line.toString())
+    }
+    else if(payload.type=="RWPOK"){
+      win.webContents.send('RWPOK',data);
+      
+      console.log(line.toString())
+    }
+    else if(payload.type=="missionUpdate"){
+      win.webContents.send("missionUpdate",data);
+    
+      console.log(line.toString())
+    }
+     else{
+      win.webContents.send('test',data);
+       console.log(line.toString())
+     }
+    }catch(err){}
+    //win.webContents.send('data', payloadJson);
     //    win.webContents.send('data',data);
   })
 
 });
-
+ipcMain.on('new_connection', (event,args) =>{
+  socket.emit('new_connection',"");
+  event.returnValue = "Ok";
+})
 ipcMain.on('disconnect', (event, args) => {
   try {
     socket.close();
@@ -160,7 +194,7 @@ ipcMain.on('transmit', (event,args) =>{
 var valid = true;
 try{
 var ev  =  JSON.parse(args);
-
+console.log(ev);
 if(valid){
   if(gloargs=="SERIAL"){
    //var  port2 = new SerialPort(serargs[0],{ baudRate: parseInt(serargs[1]) });
@@ -175,6 +209,7 @@ if(valid){
    }
    else if(gloargs=="GATEWAY"){
       socket.emit('command',args);
+     // console.log(args);
       event.returnValue = 'OK'; 
    }
   else{
@@ -298,7 +333,7 @@ ipcMain.on('serialdisconnect', (event,args) => {
    
         var portnames =[];
         for(var p of ports){
-          if(p['comName'].toLowerCase().indexOf("com")>=0 || p['comName'].toLowerCase().indexOf("usb")>=0)
+          if(p['comName'].toLowerCase().indexOf("com")>=0 || p['comName'].toLowerCase().indexOf("usb")>=0 ||p['comName'].toLowerCase().indexOf("esp")>=0 || p['comName'].toLowerCase().indexOf("mdx")>=0)
           portnames.push(p['comName'])
         }
         event.returnValue =  randomItem(portnames);
@@ -333,7 +368,7 @@ ipcMain.on('getmissionState', (event, args) => {
 
 setInterval(function(){
  // log.info("HELLO")
- rest.get("https://opensky-network.org/api/states/all?lamin=22.3752&lomin=51.6174&lamax=26.4949&lomax=56.6161").on('complete', function (result) {
+ rest.get("https://darkclaude:ninjax12@opensky-network.org/api/states/all?lamin=22.3752&lomin=51.6174&lamax=26.4949&lomax=56.6161").on('complete', function (result) {
  if (result instanceof Error) {
     //console.log('Error:', result.message);
     this.retry(5000); // try again after 5 sec
@@ -375,7 +410,11 @@ win.webContents.send('radar', payloadJson);
 
   }
 });
+
+
   
 },500);
 
 
+
+// 

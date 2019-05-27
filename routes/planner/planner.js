@@ -253,9 +253,20 @@ ipcRenderer.on('commandresponse', (event, args) => {
  try{
 var res  = JSON.parse(args.toString());
 console.log(res);
-if(res.msg=="UWPOK"){
-  swal("","Mission Uploaded Successfully",'success');
-}
+
+    switch(res){
+      
+      case "UWP" :
+      if(res.state=="success"){
+        swal("","Mission Upload Successfull",res.state);
+      }
+      else {
+        swal("","Mission Upload Failed",res.state);
+      }
+      break;
+
+    }
+
 
  }catch(error){
 
@@ -501,7 +512,7 @@ function exportMissionlite(){
   //}
   }
   exported=exported.reverse();
-  exported.push({x: "x"});
+  //exported.push({x: "x"});
  // console.log(exported);
  return exported;
 }
@@ -600,21 +611,14 @@ rwp=0;
   //console.log(tm);
   //console.log(tm.length)
      
-    sender = setInterval(function(){
-     if(it<tm.length &&  $scope.linkdn){
-          var  load = JSON.stringify({type: "UWP", msg: tm[it]});
-       //   console.log(load);
-      //    console.log(load.length);
+    
+           if($scope.linkdn){
+          var  load = JSON.stringify({class: "mission",type: "UWP", msg: JSON.stringify(tm)});
+
           var transmit =  ipcRenderer.sendSync('transmit', load);
           con.log(transmit);
-       //   console.log(it);
-          it=it+1;
-     }
-     else{
-      clearInterval(this);
-     }
-        },150);
-      
+     
+           }
        //   sd= new Date();
        
      
