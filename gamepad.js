@@ -2,8 +2,9 @@ var io = require('socket.io-client')
 
 var gamepadLib = require("gamepad");
  var gloargs ="";
- //var socket = io('http://192.168.4.148:4500');
-   var socket = io('http://hamideu.herokuapp.com');
+ var socket = io('http://192.168.4.148:4500');
+ //var socket = io('http://172.20.10.7:4500');
+ //  var socket = io('http://hamideu.herokuapp.com');
  // var socket = io('http://80.227.113.178:4500');
  var in_connection = false;
 var old_mission_hash="";
