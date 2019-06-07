@@ -86,7 +86,7 @@ setInterval(function(){
         var args = JSON.stringify(gamepad);
         var current_mission_hash = args//sha1(args);
         old_mission_hash=args;
-        if(current_mission_hash != old_mission_hash) {
+        if( current_mission_hash != old_mission_hash) {
         
          
         } else {
