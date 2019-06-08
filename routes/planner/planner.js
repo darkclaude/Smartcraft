@@ -253,12 +253,12 @@ ipcRenderer.on('commandresponse', (event, args) => {
  try{
 var res  = JSON.parse(args.toString());
 console.log(res);
-
-    switch(res){
+//alert(args)
+    switch(res.cmd){
       
       case "UWP" :
       if(res.state=="success"){
-        swal("","Mission Upload Successfull",res.state);
+        swal("","Mission Upload Successful",res.state);
       }
       else {
         swal("","Mission Upload Failed",res.state);
@@ -571,9 +571,9 @@ $scope.downloadMission = function(){
 
 $scope.randomMission = function(){
 clearMission();
-for(var i =0; i<120; i++){
-var lat = 25.0 +  Math.random()+ Math.random();
-var lng = 55.0 +  Math.random() + Math.random();
+for(var i =0; i<50; i++){
+var lat = 24.5 +  Math.random() ;
+var lng = 55.0 +  Math.random() ;
 var newMarker = new google.maps.LatLng(lat, lng);
 placeMarker(newMarker);
 }
